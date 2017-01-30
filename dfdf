@@ -1,0 +1,327 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 3d72ea6..6cbabca 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -4,16 +4,18 @@[m
+ 	<modelVersion>4.0.0</modelVersion>[m
+ 	<groupId>com.mulesoft.training</groupId>[m
+ 	<artifactId>maven-project</artifactId>[m
+[31m-    <version>1.0.0-SNAPSHOT</version>[m
+[31m-    <packaging>mule</packaging>[m
+[32m+[m	[32m<version>1.0.0-SNAPSHOT</version>[m
+[32m+[m	[32m<packaging>mule</packaging>[m
+ 	<name>Mule maven-project Application</name>[m
+ [m
+[31m-    <properties>[m
+[32m+[m	[32m<properties>[m
+ 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>[m
+ 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>[m
+ [m
+[31m-		<mule.version>3.8.3</mule.version>[m
+[31m-    	<mule.tools.version>1.2</mule.tools.version>[m
+[32m+[m		[32m<mule.version>3.8.0</mule.version>[m
+[32m+[m		[32m<mule.tools.version>1.2</mule.tools.version>[m
+[32m+[m		[32m<derby.version>10.12.1.1</derby.version>[m
+[32m+[m		[32m<activemq.version>5.13.3</activemq.version>[m
+ 	</properties>[m
+ [m
+ 	<build>[m
+[36m@@ -24,7 +26,16 @@[m
+ 				<version>${mule.tools.version}</version>[m
+ 				<extensions>true</extensions>[m
+ 				<configuration>[m
+[31m-                    <copyToAppsDirectory>true</copyToAppsDirectory>[m
+[32m+[m					[32m<copyToAppsDirectory>true</copyToAppsDirectory>[m
+[32m+[m				[32m</configuration>[m
+[32m+[m			[32m</plugin>[m
+[32m+[m			[32m<plugin>[m
+[32m+[m				[32m<artifactId>maven-assembly-plugin</artifactId>[m
+[32m+[m				[32m<version>2.2.1</version>[m
+[32m+[m				[32m<configuration>[m
+[32m+[m					[32m<descriptorRefs>[m
+[32m+[m						[32m<descriptorRef>project</descriptorRef>[m
+[32m+[m					[32m</descriptorRefs>[m
+ 				</configuration>[m
+ 			</plugin>[m
+ 			<plugin>[m
+[36m@@ -46,6 +57,9 @@[m
+ 								<resource>[m
+ 									<directory>mappings/</directory>[m
+ 								</resource>[m
+[32m+[m								[32m<resource>[m
+[32m+[m									[32m<directory>src/main/api/</directory>[m
+[32m+[m								[32m</resource>[m
+ 							</resources>[m
+ 						</configuration>[m
+ 					</execution>[m
+[36m@@ -58,7 +72,7 @@[m
+ 	<dependencies>[m
+ 		<!-- Xml configuration -->[m
+ 		<dependency>[m
+[31m-        	<groupId>com.mulesoft.muleesb</groupId>[m
+[32m+[m			[32m<groupId>com.mulesoft.muleesb</groupId>[m
+ 			<artifactId>mule-core-ee</artifactId>[m
+ 			<version>${mule.version}</version>[m
+ 			<scope>provided</scope>[m
+[36m@@ -84,13 +98,13 @@[m
+ 			<scope>provided</scope>[m
+ 		</dependency>[m
+ 		<dependency>[m
+[31m-        	<groupId>com.mulesoft.muleesb.transports</groupId>[m
+[32m+[m			[32m<groupId>com.mulesoft.muleesb.transports</groupId>[m
+ 			<artifactId>mule-transport-jdbc-ee</artifactId>[m
+ 			<version>${mule.version}</version>[m
+ 			<scope>provided</scope>[m
+ 		</dependency>[m
+ 		<dependency>[m
+[31m-        	<groupId>com.mulesoft.muleesb.transports</groupId>[m
+[32m+[m			[32m<groupId>com.mulesoft.muleesb.transports</groupId>[m
+ 			<artifactId>mule-transport-jms-ee</artifactId>[m
+ 			<version>${mule.version}</version>[m
+ 			<scope>provided</scope>[m
+[36m@@ -114,6 +128,20 @@[m
+ 			<version>${mule.version}</version>[m
+ 			<scope>provided</scope>[m
+ 		</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- non-mule dependencies -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.derby</groupId>[m
+[32m+[m			[32m<artifactId>derby</artifactId>[m
+[32m+[m			[32m<version>${derby.version}</version>[m
+[32m+[m			[32m<!-- <scope>provided</scope> -->[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.activemq</groupId>[m
+[32m+[m			[32m<artifactId>activemq-all</artifactId>[m
+[32m+[m			[32m<version>${activemq.version}</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+ 		<!-- for testing -->[m
+ 		<dependency>[m
+ 			<groupId>org.mule.tests</groupId>[m
+[36m@@ -121,44 +149,67 @@[m
+ 			<version>${mule.version}</version>[m
+ 			<scope>test</scope>[m
+ 		</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.mule.modules</groupId>[m
+[32m+[m			[32m<artifactId>mule-module-spring-config</artifactId>[m
+[32m+[m			[32m<version>${mule.version}</version>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.mule.modules</groupId>[m
+[32m+[m			[32m<artifactId>mule-module-http</artifactId>[m
+[32m+[m			[32m<version>${mule.version}</version>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.mule.modules</groupId>[m
+[32m+[m			[32m<artifactId>mule-module-db</artifactId>[m
+[32m+[m			[32m<version>${mule.version}</version>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.mule.transports</groupId>[m
+[32m+[m			[32m<artifactId>mule-transport-jms</artifactId>[m
+[32m+[m			[32m<version>${mule.version}</version>[m
+[32m+[m		[32m</dependency>[m
+ 	<dependency>[m
+             <groupId>org.mule.modules</groupId>[m
+[31m-            <artifactId>mule-module-http</artifactId>[m
+[31m-            <version>${mule.version}</version>[m
+[31m-            <scope>provided</scope>[m
+[31m-        </dependency>[m
+[31m-    <dependency>[m
+[31m-            <groupId>org.mule.modules</groupId>[m
+[31m-            <artifactId>mule-module-spring-config</artifactId>[m
+[32m+[m[32m            <artifactId>mule-module-json</artifactId>[m
+             <version>${mule.version}</version>[m
+[31m-            <scope>provided</scope>[m
+[32m+[m[32m            <scope>provided</scope>[m[41m [m
+         </dependency>[m
+     </dependencies>[m
+ [m
+ 	<repositories>[m
+[31m-          <repository>[m
+[31m-            <id>Central</id>[m
+[31m-            <name>Central</name>[m
+[31m-            <url>http://repo1.maven.org/maven2/</url>[m
+[31m-            <layout>default</layout>[m
+[31m-        </repository>[m
+[31m-        <repository>[m
+[31m-            <id>mulesoft-releases</id>[m
+[31m-            <name>MuleSoft Releases Repository</name>[m
+[31m-            <url>http://repository.mulesoft.org/releases/</url>[m
+[31m-            <layout>default</layout>[m
+[31m-        </repository>[m
+[31m-    </repositories>[m
+[31m-    <pluginRepositories>[m
+[31m-        <pluginRepository>[m
+[31m-            <id>mulesoft-release</id>[m
+[31m-            <name>mulesoft release repository</name>[m
+[31m-            <layout>default</layout>[m
+[31m-            <url>http://repository.mulesoft.org/releases/</url>[m
+[31m-            <snapshots>[m
+[31m-                <enabled>false</enabled>[m
+[31m-            </snapshots>[m
+[31m-        </pluginRepository>[m
+[31m-    </pluginRepositories>[m
+[32m+[m		[32m<repository>[m
+[32m+[m			[32m<id>Central</id>[m
+[32m+[m			[32m<name>Central</name>[m
+[32m+[m			[32m<url>http://repo1.maven.org/maven2/</url>[m
+[32m+[m			[32m<layout>default</layout>[m
+[32m+[m		[32m</repository>[m
+[32m+[m		[32m<repository>[m
+[32m+[m			[32m<id>mulesoft-releases</id>[m
+[32m+[m			[32m<name>MuleSoft Releases Repository</name>[m
+[32m+[m			[32m<url>http://repository.mulesoft.org/releases/</url>[m
+[32m+[m			[32m<layout>default</layout>[m
+[32m+[m		[32m</repository>[m
+[32m+[m		[32m<repository>[m
+[32m+[m			[32m<id>mulesoft-snapshots</id>[m
+[32m+[m			[32m<name>MuleSoft Snapshots Repository</name>[m
+[32m+[m			[32m<url>http://repository.mulesoft.org/snapshots/</url>[m
+[32m+[m			[32m<layout>default</layout>[m
+[32m+[m		[32m</repository>[m
+[32m+[m	[32m</repositories>[m
+[32m+[m	[32m<pluginRepositories>[m
+[32m+[m		[32m<pluginRepository>[m
+[32m+[m			[32m<id>mulesoft-release</id>[m
+[32m+[m			[32m<name>mulesoft release repository</name>[m
+[32m+[m			[32m<layout>default</layout>[m
+[32m+[m			[32m<url>http://repository.mulesoft.org/releases/</url>[m
+[32m+[m			[32m<snapshots>[m
+[32m+[m				[32m<enabled>false</enabled>[m
+[32m+[m			[32m</snapshots>[m
+[32m+[m		[32m</pluginRepository>[m
+[32m+[m	[32m</pluginRepositories>[m
+ [m
+ </project>[m
+[1mdiff --git a/src/main/app/maven-project.xml b/src/main/app/maven-project.xml[m
+[1mindex 8e52b85..4aa4ca9 100644[m
+[1m--- a/src/main/app/maven-project.xml[m
+[1m+++ b/src/main/app/maven-project.xml[m
+[36m@@ -1,15 +1,54 @@[m
+ <?xml version="1.0" encoding="UTF-8"?>[m
+ [m
+[31m-<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"[m
+[31m-	xmlns:spring="http://www.springframework.org/schema/beans" [m
+[31m-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"[m
+[31m-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd[m
+[31m-http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd[m
+[32m+[m[32m<!--[m
+[32m+[m[32m  maven-project-complete[m
+[32m+[m[32m  Application deployed to jenkins server to show[m
+[32m+[m[32m  CI w/ automated deployment[m
+[32m+[m
+[32m+[m[32m  Deployment note(s):[m[41m [m
+[32m+[m[32m    - Must use a unique http port ot ensure tests and deployment[m
+[32m+[m[32m      don't conflict with other student's applications.[m
+[32m+[m[32m-->[m
+[32m+[m
+[32m+[m[32m<mule[m[41m [m
+[32m+[m[32m  xmlns="http://www.mulesoft.org/schema/mule/core"[m[41m [m
+[32m+[m[32m  xmlns:db="http://www.mulesoft.org/schema/mule/db"[m[41m [m
+[32m+[m[32m  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"[m[41m [m
+[32m+[m[32m  xmlns:http="http://www.mulesoft.org/schema/mule/http"[m[41m [m
+[32m+[m[32m  xmlns:json="http://www.mulesoft.org/schema/mule/json"[m[41m [m
+[32m+[m[32m  xmlns:spring="http://www.springframework.org/schema/beans"[m[41m [m
+[32m+[m[32m  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"[m
+[32m+[m[32m  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd[m
+[32m+[m[32mhttp://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd[m
+ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd[m
+[31m-http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">[m
+[31m-    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>[m
+[31m-    <flow name="mavenFlow">[m
+[31m-        <http:listener config-ref="HTTP_Listener_Configuration" path="/hello" doc:name="/hello"/>[m
+[31m-        <set-payload value="#[Hello Maven]" doc:name="Set Payload"/>[m
+[31m-    </flow>[m
+[32m+[m[32mhttp://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd[m
+[32m+[m[32mhttp://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">[m
+[32m+[m
+[32m+[m[32m  <!-- base config for http entry point -->[m
+[32m+[m[32m  <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>[m
+[32m+[m
+[32m+[m[32m  <!-- connection to derby in-memory database -->[m
+[32m+[m[32m  <db:derby-config name="Derby_Configuration" url="jdbc:derby:memory:muleEmbeddedDB;create=true" doc:name="Derby Configuration"/>[m
+[32m+[m
+[32m+[m[32m  <!-- creates db on startup via afterPropertiesSet() method -->[m
+[32m+[m[32m  <spring:beans>[m
+[32m+[m[32m    <spring:bean id="Bean" name="Bean" class="com.mulesoft.training.Database"/>[m
+[32m+[m[32m  </spring:beans>[m
+[32m+[m
+[32m+[m[32m  <!-- returns static message: Hello Maven -->[m
+[32m+[m[32m  <flow name="mavenFlow">[m
+[32m+[m[32m    <http:listener config-ref="HTTP_Liwarning: LF will be replaced by CRLF in src/main/app/maven-project.xml.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in src/main/app/mule-deploy.properties.
+The file will have its original line endings in your working directory.
+stener_Configuration" path="/maven" doc:name="HTTP"/>[m
+[32m+[m[32m    <set-payload value="#['Hello Maven']" doc:name="Set Payload"/>[m
+[32m+[m[32m  </flow>[m
+[32m+[m
+[32m+[m[32m  <!-- queries db and returns result set in json -->[m
+[32m+[m[32m  <flow name="retrieveFlights">[m
+[32m+[m[32m    <http:listener config-ref="HTTP_Listener_Configuration" path="/flights" doc:name="HTTP"/>[m
+[32m+[m[32m    <db:select config-ref="Derby_Configuration" doc:name="Database">[m
+[32m+[m[32m      <db:parameterized-query><![CDATA[SELECT * FROM flights]]></db:parameterized-query>[m
+[32m+[m[32m    </db:select>[m
+[32m+[m[32m    <set-property propertyName="content-type" value="application/json" doc:name="Property"/>[m
+[32m+[m[32m        <json:object-to-json-transformer doc:name="Object to JSON"/>[m
+[32m+[m[32m  </flow>[m
+[32m+[m
+ </mule>[m
+[1mdiff --git a/src/main/app/mule-deploy.properties b/src/main/app/mule-deploy.properties[m
+[1mindex 3a15953..a389943 100644[m
+[1m--- a/src/main/app/mule-deploy.properties[m
+[1m+++ b/src/main/app/mule-deploy.properties[m
+[36m@@ -1,5 +1,4 @@[m
+[31m-#** GENERATED CONTENT ** Mule Application Deployment Descriptor[m
+[31m-#Mon Jan 30 13:02:51 CST 2017[m
+[32m+[m[32m#Tue Jun 23 11:49:41 PDT 2015[m
+ redeployment.enabled=true[m
+ encoding=UTF-8[m
+ domain=default[m
+[1mdiff --git a/src/test/java/com/mulesoft/training/HelloMavenTest.java b/src/test/java/com/mulesoft/training/HelloMavenTest.java[m
+[1mindex 80422b3..ffe7ac5 100644[m
+[1m--- a/src/test/java/com/mulesoft/training/HelloMavenTest.java[m
+[1m+++ b/src/test/java/com/mulesoft/training/HelloMavenTest.java[m
+[36m@@ -3,18 +3,30 @@[m [mpackage com.mulesoft.training;[m
+ import static org.junit.Assert.*;[m
+ [m
+ import org.junit.Test;[m
+[32m+[m[32mimport org.mule.api.MuleEvent;[m
+ import org.mule.tck.junit4.FunctionalTestCase;[m
+ [m
+ public class HelloMavenTest extends FunctionalTestCase {[m
+ [m
+[32m+[m[32m    // mavenFlow returns Hello Maven[m
+     @Test[m
+     public void mavenFlowReturnsHelloMaven() throws Exception {[m
+         runFlowAndExpect("mavenFlow", "Hello Maven");[m
+     }[m
+[31m-    [m
+[32m+[m
+[32m+[m[32m    // retrieveFlights response contains content-type header[m
+[32m+[m[32m    // content-type headers has a value of application/json[m
+[32m+[m[32m    @Test[m
+[32m+[m[32m    public void retrieveFlightsAddsAppropriateHeader() throws Exception{[m
+[32m+[m[32m      MuleEvent event = runFlow("retrieveFlights");[m
+[32m+[m[32m      String contentType = event.getMessage().getOutboundProperty("Content-Type");[m
+[32m+[m[32m      assertEquals("application/json", contentType);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    // run maven-config.xml when testing[m
+     @Override[m
+[31m-    protected String getConfigFile() {[m
+[31m-        return "maven-project.xml";[m
+[32m+[m[32m    protected String getConfigFile(){[m
+[32m+[m[32m      return "maven-project.xml";[m
+     }[m
+ [m
+ }[m
+warning: LF will be replaced by CRLF in src/test/java/com/mulesoft/training/HelloMavenTest.java.
+The file will have its original line endings in your working directory.
